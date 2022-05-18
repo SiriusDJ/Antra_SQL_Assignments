@@ -60,6 +60,5 @@ WHERE Name LIKE 'SPO[^K]%'
 ORDER BY Name
 
 --Q12
-SELECT DISTINCT ProductSubcategoryID, Color
+SELECT DISTINCT ISNULL(ProductSubcategoryID, -1) as ProductSubcatoryID, ISNULL(Color, -1) as Color
 FROM Production.Product
-WHERE ProductSubcategoryID IS NOT NULL AND Color IS NOT NULL
