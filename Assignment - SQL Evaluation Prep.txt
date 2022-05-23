@@ -1,0 +1,134 @@
+## Assignment - SQL Evaluation Prep
+
+1. What is index; types of indices; pros and cons;
+index is a type of inbuild look-up table that could make retrieval speed of rows of table faster
+clustered index: will sort the data
+unclustered index will not sort the data
+pros: select statement is faster
+cons: use extra space;other DML statements are slower
+
+2. What's the diff between Primary key and Unique Constraint?
+Primary key is unique in a table while unique constraints can be applied to multiple columns
+Primary key does not allow null values while unique constraints can have atmost one null value
+Primary key is necessarily unique but unique ones are not necessarilty primary keys
+Primary key will automatically sort the data while unique does not
+
+3. Tell me about check constraint
+check constraint is used when you want to set some limits for the data when you insert data into a certain data
+
+4. Diff between temp table and table variable
+Temp table scoped larger (local/global) while table variable can only be used in a batch
+Temp table can store more than 100 rows while table variable typically only store less than 100 rows
+Table variable can be used in stored procedure while temp table cannot
+
+5. Diff between where and having 
+Where is directly used on the entire table for filtering while having only on aggregate function
+where can be used in update, delete etc while having can only be used with select method
+where is processed before the aggregate function while having is used after the aggregation
+
+6. Diff between Rank() and DenseRank() - value gap
+DenseRank() does not have value gap
+
+7. Count(*) and Count(colname)
+The former one also count in the null values while the latter one does not
+
+8. What's the difference between left join and inner join? JOIN and Subquery, which
+one has a better performance, why?
+inner join returns all the matching values while left join returns all the records from the left table along with the matching values if exists (if there is no matched value, it shows null)
+
+9. What is correlated subquery
+It is a kind of subquery where inner query has some dependency on the outer query
+
+10. What is a CTE, why do we need the CTE?
+CTE means common table expression. It is used as a temporary result that can be used again in the latter query within a batch. It is used to make coding clearer to the reader.
+
+11. What does SQL profiler do?
+SQL profiler is used to trace and monitor an instance of Database Engine or Analysis Services
+
+12. WHat is SQL injection, how to avoid SQL injection?
+An SQL injection is a way to retrieve or manipulate data by inserting SQL query into fields from the outside of the program
+Stored procedures is a way to prevent such injection by either by making the query parameterized 
+Another way is to check the validation of the user and its input to see if the input is allowed
+
+13. Difference between SP and user defined function? When to use SP when to use function?
+Stored procedure can use functions but functions cannot call stored procedure
+functions are used in a query while stored procedure is called with its name
+stored procedures are for DML while functions are for calculations
+stored procedure may not return values, functions must have return values
+
+14. Criteria of Union and Union all? Diff between Union and Union All?
+For criteria, two tables must have same number of columns, same column types to be unioned. 
+for the diff,
+Union all returns all the values while union will eliminates duplicates
+union will sort the data for the first row while union all will not
+union all is used in a recursive cte, while union cannot.
+
+15. Steps you take to improve SQL Queries
+use index wisely
+avoid unnecessary joins
+use join instead of subquery (relational subquery excluded)
+avoid grouping by too many fields
+
+16. concurrency problem in transaction
+concurrency occurs when many users are trying to modify or access the same data at the same time
+
+dirty read: it is caused by isolation level read uncommitted when t1 allows t2 to read uncommitted data. 
+it can be solved by isolation level read committed
+
+lost update: is caused by isolation level committed when t1 and t2 update the data but t2 update first then t1 will lost its update
+can be solved by repeatable read
+
+non repeatable read: is caused by isolation level read committed when t1 read the same data twice while t2 is updating the data
+can be solved by isolation repeatable read
+
+phantom read: caused by isolation level repeatable read when t1 reads the data twice while t2 is inserting records
+can be solved by isolation level serializable
+
+
+17. What is deadlock, how to prevent
+Deadlocks occur when two processes want to access resources that are mutually being locked by each other. This locked situation can continue forever if nobody stops it
+Bankers’s Algorithm is resource allocation and deadlock avoidance algorithm which test all the request made by processes for resources, it checks for the safe state, if after granting
+request system remains in the safe state it allows the request and if there is no safe state it doesn’t allow the request made by the process
+
+18. What is normalization, 1NF-BCNF, benefits using normalization
+Database Normalization is a process of organizing data to minimize redundancy (data duplication), which in turn ensures data consistency
+1st Normal Form : atomic values: One cell, one value, No repeating groups
+2nd Normal Form : 1NF, remove Partial Dependency
+3rd Normal Form : 2NF, remove Transitive Dependency
+BCNF = Boyce-Codd Normal Form : no other dependency except those on pk
+benefits: reduce redundancy
+
+19. What are the system defined databases?
+Master: catalog database, keeps info on all user defined databases (.mdf master data file is different from the extension)
+Model: whenever you make a database, right click -> properties. You can now change the size. Files -> size(mb), but if you change the model’s properties, the settings change for the
+next database accordingly. “Alter database” is the command
+Msdb: where server agent keeps its activities
+Tempdb: keeps temporary tables for usage in the query. Removes all tables after closing SQL
+Mssql system resource: Predefined functionalities. Predefined stored procedures are held here. Exampled of a stored procedure stored is Sp_Help which gives you a table of object
+name, owner, and object type of everything in the database
+
+20. composite key
+composite key is a combination of two or more columns that is used as primary key.
+
+21. candidate key
+a key that is not pk but can be eligible to be a pk. usually it is a unique key without null value
+
+22. DDL vs. DML
+DDL is data definition language: allows creation objects like create, alter, drop, truncate
+DML is data manipulation language: allows query and modify the data, select, insert, update, delete
+
+23. ACID property
+A: Atomicity - work is atomic
+C: Consistency - whatever happens in the middle of the transaction, this property will never leave our database in half-completed state
+I: Isolation - two transactions will be isolated from each other by locking the resource
+D: Durability - once the transaction is completed, then the changes it has made to databases will be permanent
+
+24. table scan vs. index scan
+Table scan means iterate over all table rows. Index scan means iterate over all index items, when item index meets search condition, table row is retrieved through index. Usually index
+scan is less expensive than a table scan because index is more flat than a table
+
+25. Diff between union and join
+join combines data from many tables based on a matched condition while union combines the result from two or more select statements
+join combines data horizontally to make new columns while union combines data vertically to make new rows
+datatypes/number of columns can be different for join but not for union
+join may not return distinct column while diff eliminates all the duplicates
